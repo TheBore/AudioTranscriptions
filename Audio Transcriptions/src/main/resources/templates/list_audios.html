@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Audio Transcriptions</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <script>
+        var x = document.getElementById("myAudio");
+
+        function playAudio() {
+            x.play();
+        }
+
+        function pauseAudio() {
+            x.pause();
+        }
+    </script>
+
+</head>
+<body>
+    <div class="container p-3 my-3 border">
+        <div class="row justify-content-center" >
+            <div class="container-fluid">
+                <div>
+                    <h1>Audio transcriptions</h1>
+                    <label>Name:</label>
+                    <span th:text="${transcription.getAudioName()}"></span>
+                    <br/>
+
+                    <label>Transcription:</label>
+                    <br/>
+
+                    <form th:action="@{'/audios/save_transcription/{id}' (id=${transcription.getId()})}" th:method="POST">
+                        <div class="row" style="margin-bottom: 5px">
+                                <div class="col-2">
+                                    <textarea style="width: 180px; height: 77px" id="transcription" name="transcription"></textarea>
+                                </div>
+                                <div class="col-3">
+                                    <button type="submit" style="margin-top: 19px; margin-left: 5px">
+                                        <img src="../static/node_modules/bootstrap-icons/icons/arrow-right-square-fill.svg" width="30" height="30">
+                                        Next
+                                    </button>
+                                </div>
+                        </div>
+                    </form>
+
+                    <audio id="myAudio" controls>
+                        <!--<source th:src="@{'../audios/{name}.wav}' (name=${transcription.getAudioName()})}" type="audio/wav">
+                        -->
+                        <source th:src="@{${'../audios/' + transcription.getAudioName() + '.wav'}}" type="audio/wav">
+
+                    </audio>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
