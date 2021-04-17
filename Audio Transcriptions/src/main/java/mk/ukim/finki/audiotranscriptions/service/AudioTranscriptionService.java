@@ -1,6 +1,9 @@
 package mk.ukim.finki.audiotranscriptions.service;
 
 import mk.ukim.finki.audiotranscriptions.model.AudioTranscription;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public interface AudioTranscriptionService {
 
@@ -8,5 +11,7 @@ public interface AudioTranscriptionService {
 
     AudioTranscription saveTranscription(Long id, String transcription);
 
-    void unlockTranscription(Long id);
+    void addAudioFiles(MultipartFile[] multipartFile);
+
+    List<AudioTranscription> findAll();
 }

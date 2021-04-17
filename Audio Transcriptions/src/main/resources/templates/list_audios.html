@@ -16,15 +16,32 @@
             crossorigin="anonymous"></script>
 
     <script>
-        var x = document.getElementById("myAudio");
+        let keysPressed = {};
 
-        function playAudio() {
-            x.play();
+        function playAudio(event) {
+            var char = event.which || event.keyCode;
+            var rightCtrl = event.location;
+
+            var x = document.getElementById("myAudio");
+            if(x.paused && char === 17 && rightCtrl === 2) // 18 = ctrl; 2 = right
+                x.play();
+            else
+                x.pause();
         }
 
-        function pauseAudio() {
-            x.pause();
-        }
+        document.addEventListener('keydown', (event) => {
+            keysPressed[event.key] = true;
+
+            if (keysPressed['Shift'] && keysPressed['Enter']) {
+                keysPressed['Shift'] = false;
+                keysPressed['Enter'] = false;
+                document.getElementById("btnSubmit").click();
+            }
+        });
+
+        document.addEventListener('keyup', (event) => {
+            keysPressed[event.key] = false;
+        });
     </script>
 
 </head>
@@ -44,10 +61,10 @@
                     <form th:action="@{'/audios/save_transcription/{id}' (id=${transcription.getId()})}" th:method="POST">
                         <div class="row" style="margin-bottom: 5px">
                                 <div class="col-2">
-                                    <textarea style="width: 180px; height: 77px" id="transcription" name="transcription"></textarea>
+                                    <textarea style="width: 180px; height: 77px" id="transcription" name="transcription" onkeydown="playAudio(event)"></textarea>
                                 </div>
                                 <div class="col-3">
-                                    <button type="submit" style="margin-top: 19px; margin-left: 5px">
+                                    <button id="btnSubmit" type="submit" style="margin-top: 19px; margin-left: 5px">
                                         <img src="../static/node_modules/bootstrap-icons/icons/arrow-right-square-fill.svg" width="30" height="30">
                                         Next
                                     </button>
@@ -63,6 +80,27 @@
                     </audio>
                     <br/>
                 </div>
+
+                <h3>Add New Audios Files</h3>
+                <form method="post" commandName="audio" enctype="multipart/form-data"
+                        action="audios/upload">
+                    <table>
+                        <tr>
+                            <td>Audios</td>
+                            <td>
+                                <input type="file" name="files" multiple="multiple"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>
+                                <input type="submit" value="Save">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+                <a href="/audios/download_excel">Download table</a>
             </div>
         </div>
     </div>

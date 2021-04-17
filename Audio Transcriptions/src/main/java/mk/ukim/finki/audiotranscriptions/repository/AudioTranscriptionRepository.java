@@ -11,5 +11,6 @@ import java.util.Optional;
 @Repository
 public interface AudioTranscriptionRepository extends JpaRepository<AudioTranscription, Long> {
 
-    Optional<AudioTranscription> findFirstByLockedAndTranscriptionIsNull(Boolean locked);
+    Optional<AudioTranscription> findFirstByLockedAndTranscriptionIsNullOrTranscriptionEquals
+            (Boolean locked, String transcription);
 }
