@@ -75,7 +75,7 @@
                     <audio id="myAudio" controls>
                         <!--<source th:src="@{'../audios/{name}.wav}' (name=${transcription.getAudioName()})}" type="audio/wav">
                         -->
-                        <source th:src="@{${'../audios/' + transcription.getAudioName() + '.wav'}}" type="audio/wav">
+                        <source th:src="@{${'../audios/' + transcription.getAudioName()}}" type="audio/wav">
 
                     </audio>
                     <br/>
