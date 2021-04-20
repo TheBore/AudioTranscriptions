@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
-@RequestMapping(value = {"/audios","/"})
+@RequestMapping("/")
 public class AudiosController {
 
     private final AudioTranscriptionService audioTranscriptionService;
@@ -32,27 +32,37 @@ public class AudiosController {
     }
 
     @GetMapping
+    public String getHomePage(){
+        return "home_page";
+    }
+
+    @GetMapping("audios")
     public String getAudiosPage(Model model){
         AudioTranscription transcription = audioTranscriptionService.getNextTranscription();
         if(transcription == null)
             return "finished";
         model.addAttribute("transcription",transcription);
+        model.addAttribute("bodyContent", "robot");
         return "list_audios";
     }
+    @GetMapping("audios/upload_files")
+    public String getUploadPage(){
+        return "upload_page";
+    }
 
-    @PostMapping("/save_transcription/{id}")
+    @PostMapping("audios/save_transcription/{id}")
     public String saveTranscription(@PathVariable Long id, @RequestParam String transcription){
         audioTranscriptionService.saveTranscription(id,transcription);
         return "redirect:/audios";
     }
 
-    @RequestMapping(value = "upload", method = RequestMethod.POST)
+    @RequestMapping(value = "audios/upload", method = RequestMethod.POST)
     public String save(@RequestParam(value = "files") MultipartFile[] files) {
         audioTranscriptionService.addAudioFiles(files);
         return "redirect:/audios";
     }
 
-    @GetMapping("/download_excel")
+    @GetMapping("audios/download_excel")
     public void exportToExcel(HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");

@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet"  type="text/css"  href="css/style.css" >
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
@@ -46,63 +47,101 @@
 
 </head>
 <body>
-    <div class="container p-3 my-3 border">
+<div style="margin-top: 260px; margin-left: 270px;">
+    <section th:include="${bodyContent}">
+    </section>
+</div>
+<div></div>
+
+    <div class="container">
+        <div class="row" style="margin-top:120px">
+            <div class="loader col-x3" style="margin-left: 230px" >
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+            </div>
+            <div class="col-x3">
+                <h1 style="margin-right: 40px"><b>AUDIO TRANSCRIPTIONS</b></h1>
+            </div>
+        </div>
         <div class="row justify-content-center" >
             <div class="container-fluid">
                 <div>
-                    <h1>Audio transcriptions</h1>
-                    <label>Name:</label>
-                    <span th:text="${transcription.getAudioName()}"></span>
-                    <br/>
 
-                    <label>Transcription:</label>
-                    <br/>
+                    <div style="margin-left: 130px;">
+                        <label>Name:</label>
+                        <span th:text="${transcription.getAudioName()}"></span>
+                        <br/>
 
-                    <form th:action="@{'/audios/save_transcription/{id}' (id=${transcription.getId()})}" th:method="POST">
-                        <div class="row" style="margin-bottom: 5px">
+                        <label>Transcription:</label>
+                        <br/>
+
+                        <form th:action="@{'/audios/save_transcription/{id}' (id=${transcription.getId()})}" th:method="POST">
+                            <div class="row" style="margin-bottom: 5px">
                                 <div class="col-2">
                                     <textarea style="width: 180px; height: 77px" id="transcription" name="transcription" onkeydown="playAudio(event)"></textarea>
                                 </div>
                                 <div class="col-3">
-                                    <button id="btnSubmit" type="submit" style="margin-top: 19px; margin-left: 5px">
-                                        <img src="../static/node_modules/bootstrap-icons/icons/arrow-right-square-fill.svg" width="30" height="30">
-                                        Next
-                                    </button>
+                                    <button id="btnSubmit" type="submit" class="button" style="height: 52px; width: 100px; text-align: start; margin-top: 26px; margin-left: 55px;";><span><b>NEXT</b> </span></button>
+                                    <!--/* <button id="btnSubmit" type="submit" style="margin-top: 23px; margin-left: 54px;">
+                                         <img src="../static/node_modules/bootstrap-icons/icons/arrow-right-square-fill.svg" width="30" height="30">
+                                         Next
+                                     </button>
+                                     */-->
                                 </div>
-                        </div>
-                    </form>
 
-                    <audio id="myAudio" controls>
-                        <!--<source th:src="@{'../audios/{name}.wav}' (name=${transcription.getAudioName()})}" type="audio/wav">
-                        -->
-                        <source th:src="@{${'../audios/' + transcription.getAudioName()}}" type="audio/wav">
 
-                    </audio>
-                    <br/>
+                             </div>
+                            <div class="row">
+                                <div class="col-x3">
+                                    <audio id="myAudio" controls>
+                                        <!--<source th:src="@{'../audios/{name}.wav}' (name=${transcription.getAudioName()})}" type="audio/wav">
+                                        -->
+                                        <source th:src="@{${'../audios/' + transcription.getAudioName()}}" type="audio/wav">
+
+                                    </audio>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <a class="button" type="button" href="audios/upload_files" style="height: 55px; width: 255px; text-align: start;"><span><b>UPLOAD FILES</b> </span></a>
+                                </div>
+                            </div>
+                         </form>
+
+
+                        <br/>
+                    </div>
+
                 </div>
+                <!--/*
+                                <h3>Add New Audios Files</h3>
+                                <form method="post" commandName="audio" enctype="multipart/form-data"
+                                        action="audios/upload">
+                                    <table>
+                                        <tr>
+                                            <td>Audios</td>
+                                            <td>
+                                                <input type="file" name="files" multiple="multiple"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td>
+                                                <input type="submit" value="Save">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
 
-                <h3>Add New Audios Files</h3>
-                <form method="post" commandName="audio" enctype="multipart/form-data"
-                        action="audios/upload">
-                    <table>
-                        <tr>
-                            <td>Audios</td>
-                            <td>
-                                <input type="file" name="files" multiple="multiple"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>&nbsp;</td>
-                            <td>
-                                <input type="submit" value="Save">
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-
-                <a href="/audios/download_excel">Download table</a>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+                                <a href="/audios/download_excel">Download table</a> */-->
+                            </div>
+                        </div>
+                    </div>
+                </body>
+                </html>
