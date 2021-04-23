@@ -26,6 +26,8 @@ public class AudiotranscriptionsApplication {
                     .addResourceLocations("classpath:/audios/");
             registry.addResourceHandler("/excels/**")
                     .addResourceLocations("classpath:/excels/");
+            registry.addResourceHandler("/scripts/**")
+                    .addResourceLocations("classhpath:/scripts/");
         }
     }
 

@@ -31,23 +31,23 @@ public class AudiosController {
         this.audioTranscriptionService = audioTranscriptionService;
     }
 
-    @GetMapping
-    public String getHomePage(){
-        return "home_page";
-    }
-
-    @GetMapping("audios")
+    @GetMapping( value = {"audios", "/"} )
     public String getAudiosPage(Model model){
         AudioTranscription transcription = audioTranscriptionService.getNextTranscription();
         if(transcription == null)
             return "finished";
         model.addAttribute("transcription",transcription);
-        model.addAttribute("bodyContent", "robot");
-        return "list_audios";
+        model.addAttribute("bodyContent","list_audios");
+        model.addAttribute("robot", "robot");
+        model.addAttribute("title","AUDIO TRANSCRIPTIONS");
+        return "master";
     }
     @GetMapping("audios/upload_files")
-    public String getUploadPage(){
-        return "upload_page";
+    public String getUploadPage(Model model){
+        model.addAttribute("bodyContent","upload_page");
+        model.addAttribute("robot", "robot");
+        model.addAttribute("title","ADD NEW AUDIO FILES");
+        return "master";
     }
 
     @PostMapping("audios/save_transcription/{id}")

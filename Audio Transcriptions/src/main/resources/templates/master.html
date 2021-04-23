@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Audio Transcriptions</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet"  type="text/css"  href="../static/css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet"  type="text/css"  href="css/style.css" >
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 </head>
-<header style="margin-bottom: 500px; background-color: pink">
-
-</header>
 <body>
 
-<div class="container justify-content">
+<div class="container-fluid">
     <div class="row justify-content-md-center" style="margin-top: 8px">
         <div class="col-6">
             <ul class="nav justify-content-center" style="font-size: 40px">
@@ -35,12 +40,11 @@
             </ul>
         </div>
     </div>
-    <div class="row "style="margin-left: 290px; margin-top:270px">
-        <h1><b>THAT'S ALL FOLKS !!!</b></h1>
-    </div>
-    <div class="row" style="margin-left: 380px;">
-        <div class="col-x3"></div>
-        <div class="loader col-x3" style="margin-left: 100px" >
+
+    <br/>
+
+    <div class="row justify-content-md-center">
+        <div class="loader">
             <span class="stroke"></span>
             <span class="stroke"></span>
             <span class="stroke"></span>
@@ -49,12 +53,29 @@
             <span class="stroke"></span>
             <span class="stroke"></span>
         </div>
-        <div class="col-x3"></div>
     </div>
-    <div class="row" style="margin-left: 443px;" >
-        <div class="col-x3"></div>
 
-        <div class="col-x3"></div>
+    <br/>
+
+    <div class="row justify-content-md-center">
+        <h1><b th:text="${title}"></b></h1>
+    </div>
+
+    <div class="row justify-content-md-center">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-10">
+                    <section th:include="${bodyContent}">
+                    </section>
+                </div>
+                <div class="col-2">
+                    <section th:include="${robot}">
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="col-3"></div>
     </div>
 </div>
 </body>
